@@ -10,9 +10,9 @@ See `spec.ts`
 
 ## TODO
 
-- Arbitrary number of dimensions (3D+)
-- Make iterable
-- Implement the rest of the 1D Map features
+- Add boilerplate, publish to npm, etc
+- Support arbitrary number of dimensions
+- Implement the rest of the 1D Map features (iterable, `.has`, `.values`, etc)
 
 ## License
 
