@@ -2,14 +2,14 @@ import TwoDimensionalMap from './index';
 
 describe('TwoDimensionalMap', () => {
   test('stores and retrieves data', () => {
-    const map = new TwoDimensionalMap<string, string>();
+    const map = new TwoDimensionalMap<string, string, string>();
 
     map.set('x=1', 'y=1', 'my battleship');
     expect(map.get('x=1', 'y=1')).toBe('my battleship');
   });
 
   test('retrieves nothing when nothing is set', () => {
-    const map = new TwoDimensionalMap<string, string>();
+    const map = new TwoDimensionalMap<string, string, string>();
 
     expect(map.get('x=1', 'y=1')).toBeUndefined();
     expect(map.get('x=1', 'y=2')).toBeUndefined();
@@ -17,7 +17,7 @@ describe('TwoDimensionalMap', () => {
   });
 
   test('does not retrieve data from elsewhere', () => {
-    const map = new TwoDimensionalMap<string, string>();
+    const map = new TwoDimensionalMap<string, string, string>();
 
     map.set('x=1', 'y=1', 'my battleship');
     expect(map.get('x=2', 'y=1')).toBeUndefined();
@@ -26,7 +26,7 @@ describe('TwoDimensionalMap', () => {
   });
 
   test('allows data to be overwritten safely', () => {
-    const map = new TwoDimensionalMap<string, string>();
+    const map = new TwoDimensionalMap<string, string, string>();
 
     map.set('x=1', 'y=1', 'battleship 1');
     map.set('x=1', 'y=2', 'battleship 2');
@@ -40,7 +40,7 @@ describe('TwoDimensionalMap', () => {
   });
 
   test('allows data to be deleted safely', () => {
-    const map = new TwoDimensionalMap<string, string>();
+    const map = new TwoDimensionalMap<string, string, string>();
 
     map.set('x=1', 'y=1', 'battleship 1');
     map.set('x=1', 'y=2', 'battleship 2');
@@ -54,10 +54,10 @@ describe('TwoDimensionalMap', () => {
   });
 
   test('supports interesting types of keys and values', () => {
-    const map = new TwoDimensionalMap<() => void, symbol>();
+    const map = new TwoDimensionalMap<() => void, boolean, symbol>();
 
     const key1 = (): number => 1;
-    const key2 = (): number => 2;
+    const key2 = false;
     const value1 = Symbol();
     const value2 = Symbol();
 
