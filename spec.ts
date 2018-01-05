@@ -67,4 +67,24 @@ describe('TwoDimensionalMap', () => {
     map.set(key1, key2, value2);
     expect(map.get(key1, key2)).toBe(value2);
   });
+
+  test('.getFirstOrderKeys returns the set of `key1`s', () => {
+    const map = new TwoDimensionalMap<string, string, string>();
+
+    map.set('x=1', 'y=1', 'battleship 1');
+    map.set('x=1', 'y=2', 'battleship 2');
+    map.set('x=2', 'y=1', 'battleship 3');
+
+    expect(map.getFirstOrderKeys()).toEqual(['x=1', 'x=2']);
+  });
+
+  test('.getSecondOrderKeys returns the set of `key2`s', () => {
+    const map = new TwoDimensionalMap<string, string, string>();
+
+    map.set('x=1', 'y=1', 'battleship 1');
+    map.set('x=1', 'y=2', 'battleship 2');
+    map.set('x=2', 'y=1', 'battleship 3');
+
+    expect(map.getSecondOrderKeys()).toEqual(['y=1', 'y=2']);
+  });
 });
