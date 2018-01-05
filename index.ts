@@ -68,6 +68,16 @@ class TwoDimensionalMap<K1, K2, V> {
       }
     }
   }
+
+  public get size(): number {
+    let size = 0;
+
+    for (const k2map of this.data.values()) {
+      size += k2map.size;
+    }
+
+    return size;
+  }
 }
 
 export default TwoDimensionalMap;

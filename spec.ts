@@ -145,4 +145,16 @@ describe('TwoDimensionalMap', () => {
     expect(secondMap.get('x=1', 'y=2')).toBe('battleship 2');
     expect(secondMap.get('x=2', 'y=1')).toBe('battleship 3');
   });
+
+  test('.size equals the size of the map', () => {
+    const map = new TwoDimensionalMap<string, string, string>();
+
+    map.set('x=1', 'y=1', 'battleship 1');
+    map.set('x=1', 'y=2', 'battleship 2');
+    map.set('x=2', 'y=1', 'battleship 3');
+    map.set('x=1', 'y=1', 'destroyed');
+    map.set('x=2', 'y=1', 'destroyed');
+
+    expect(map.size).toBe(3);
+  });
 });
