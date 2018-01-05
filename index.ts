@@ -33,15 +33,13 @@ class TwoDimensionalMap<K1, K2, V> {
   public getSecondOrderKeys(): K2[] {
     const keys = new Set<K2>();
 
-    // Using Array.from as a cheap `for...of` since we're targeting ES5 directly
-    // from typescript, and older runtimes don't support for...of over iterators
-    // other than strings/arrays:
-    // https://github.com/Microsoft/TypeScript/issues/6842
-    Array.from(this.data.values(), (secondOrderMap: Map<K2, V>) => {
-      Array.from(secondOrderMap.keys(), (key: K2) => {
+    // Requires `downlevelIteration` compiler option to be enabled
+    // https://github.com/Microsoft/TypeScript/issues/11209
+    for (const k2map of this.data.values()) {
+      for (const key of k2map.keys()) {
         keys.add(key);
-      });
-    });
+      }
+    }
 
     return Array.from(keys);
   }
