@@ -87,4 +87,62 @@ describe('TwoDimensionalMap', () => {
 
     expect(map.getSecondOrderKeys()).toEqual(['y=1', 'y=2']);
   });
+
+  test('.entries returns an iterable', () => {
+    const map = new TwoDimensionalMap<string, string, string>();
+
+    map.set('x=1', 'y=1', 'battleship 1');
+    map.set('x=1', 'y=2', 'battleship 2');
+    map.set('x=2', 'y=1', 'battleship 3');
+
+    const results: [string, string, string][] = [];
+
+    for (const entry of map.entries()) {
+      results.push(entry);
+    }
+
+    expect(results).toEqual([
+      ['x=1', 'y=1', 'battleship 1'],
+      ['x=1', 'y=2', 'battleship 2'],
+      ['x=2', 'y=1', 'battleship 3']
+    ]);
+  });
+
+  test('the map itself is iterable', () => {
+    const map = new TwoDimensionalMap<string, string, string>();
+
+    map.set('x=1', 'y=1', 'battleship 1');
+    map.set('x=1', 'y=2', 'battleship 2');
+    map.set('x=2', 'y=1', 'battleship 3');
+
+    const results: [string, string, string][] = [];
+
+    for (const entry of map) {
+      results.push(entry);
+    }
+
+    expect(results).toEqual([
+      ['x=1', 'y=1', 'battleship 1'],
+      ['x=1', 'y=2', 'battleship 2'],
+      ['x=2', 'y=1', 'battleship 3']
+    ]);
+  });
+
+  test('the map allows passing an iterable in the constructor to clone data', () => {
+    const firstMap = new TwoDimensionalMap<string, string, string>();
+
+    firstMap.set('x=1', 'y=1', 'battleship 1');
+    firstMap.set('x=1', 'y=2', 'battleship 2');
+    firstMap.set('x=2', 'y=1', 'battleship 3');
+
+    const secondMap = new TwoDimensionalMap<string, string, string>(firstMap);
+
+    firstMap.delete('x=1', 'y=1');
+    firstMap.delete('x=1', 'y=2');
+    firstMap.delete('x=2', 'y=1');
+
+    expect(secondMap.get('x=1', 'y=1')).toBe('battleship 1');
+    expect(secondMap.get('x=1', 'y=2')).toBe('battleship 2');
+    expect(secondMap.get('x=2', 'y=1')).toBe('battleship 3');
+  });
 });

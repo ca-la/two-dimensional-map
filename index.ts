@@ -1,10 +1,20 @@
 type DataStore<K1, K2, V> = Map<K1, Map<K2, V>>;
 
+interface Iterable<val> {
+  [Symbol.iterator]: () => Iterator<val>;
+}
+
 class TwoDimensionalMap<K1, K2, V> {
   private data: DataStore<K1, K2, V>;
 
-  constructor() {
+  constructor(iterable?: Iterable<[K1, K2, V]>) {
     this.data = new Map<K1, Map<K2, V>>();
+
+    if (iterable) {
+      for (const [k1, k2, val] of iterable) {
+        this.set(k1, k2, val);
+      }
+    }
   }
 
   public get(key1: K1, key2: K2): V | undefined {
@@ -42,6 +52,21 @@ class TwoDimensionalMap<K1, K2, V> {
     }
 
     return Array.from(keys);
+  }
+
+  public entries(): Iterable<[K1, K2, V]> {
+    return {
+      [Symbol.iterator]: this[Symbol.iterator].bind(this)
+    };
+  }
+
+  /* tslint:disable-next-line:function-name */
+  public *[Symbol.iterator](): Iterator<[K1, K2, V]> {
+    for (const [k1, k2map] of this.data.entries()) {
+      for (const [k2, val] of k2map.entries()) {
+        yield [k1, k2, val];
+      }
+    }
   }
 }
 
