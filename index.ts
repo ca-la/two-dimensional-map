@@ -78,6 +78,10 @@ class TwoDimensionalMap<K1, K2, V> {
 
     return size;
   }
+
+  public duplicate(): TwoDimensionalMap<K1, K2, V> {
+    return new TwoDimensionalMap<K1, K2, V>(this);
+  }
 }
 
 export default TwoDimensionalMap;
